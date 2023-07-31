@@ -8,7 +8,7 @@ import java.util.Properties;
     public class APIKeyLoader {
         public static String getAPIKey() {
             Properties prop = new Properties();
-            try (InputStream input = new FileInputStream("application.properties")) {
+            try (InputStream input = new FileInputStream("src/main/resources/application.properties")) {
                 prop.load(input);
                 return prop.getProperty("API_KEY");
             } catch (IOException ex) {
