@@ -37,5 +37,5 @@ build/
 
 
 # Application specific ignore
-application.properties
+src/main/resources/application.properties
 
