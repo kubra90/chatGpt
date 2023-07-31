@@ -13,6 +13,7 @@ public class ChatRequestDto {
         this.model =model;
         messages = new ArrayList<>();
         messages.add(new Message("user", prompt));
+        this.n =1;
     }
 
     public String getModel() {
