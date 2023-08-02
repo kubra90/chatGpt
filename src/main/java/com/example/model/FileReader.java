@@ -34,7 +34,6 @@ public class FileReader {
         //save all messages into the list of messages
         List<Message> messages = new ArrayList<>();
         String input = "";
-        //customer input
         try (Scanner reader = new Scanner(promptsFile)) {
             while (reader.hasNextLine()) {
                 input = reader.nextLine();
