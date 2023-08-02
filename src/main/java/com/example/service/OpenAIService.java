@@ -1,9 +1,6 @@
 package com.example.service;
 
-import com.example.model.ChatRequestDto;
-import com.example.model.ChatResponseDto;
-import com.example.model.FileReader;
-import com.example.model.Message;
+import com.example.model.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -32,6 +29,7 @@ public class OpenAIService {
 
    private RestTemplate template = new RestTemplate();
    FileReader file= new FileReader("prompt.csv");
+   OutputFile outputFile = new OutputFile(new File("output.csv"));
 
 //   public Message chat(String prompt){
 //       HttpHeaders headers = new HttpHeaders();
@@ -53,14 +51,20 @@ public class OpenAIService {
         headers.setBearerAuth(apiKey);
         List<Message> result =new ArrayList<>();
         for(int i=0; i< output.size(); i++) {
-            ChatRequestDto request = new ChatRequestDto(model, "Can you summarize the following text with one word " + (output.get(i)));
+            ChatRequestDto request = new ChatRequestDto(model, "Please label the following text with two words. The text is that " + (output.get(i)));
             HttpEntity<ChatRequestDto> entity = new HttpEntity<>(request, headers);
 
             ResponseEntity<ChatResponseDto> response = template.postForEntity(url, entity, ChatResponseDto.class);
             result.add(response.getBody().getChoices().get(0).getMessage());
 
         }
+//        for(int i=0; i< result.size(); i++){
+//           result.get(i).getContent();
+//        }
+
+        outputFile.printFile(result);
         return result;
+
     }
 
 }
