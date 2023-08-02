@@ -1,7 +1,6 @@
 package com.example.service;
 
 import com.example.model.*;
-import com.example.model.FileReader;
 import org.apache.logging.log4j.util.StringBuilderFormattable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,14 +44,13 @@ public class OpenAIService {
         List<Message> result = new ArrayList<>();
         //new add
         if (!file.isEmpty()) {
-            String fileName = file.getOriginalFilename();
+//
             try {
                 //read csv file content
                 BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()));
                 String line;
-                StringBuilder csvContent = new StringBuilder();
                 while ((line = reader.readLine()) != null) {
-                    ChatRequestDto request = new ChatRequestDto(model, "Please label the following text with two words. The text is that " + line);
+                    ChatRequestDto request = new ChatRequestDto(model, "Summarize the following text with one word only.  "+ line);
                     HttpEntity<ChatRequestDto> entity = new HttpEntity<>(request, headers);
 
                     ResponseEntity<ChatResponseDto> response = template.postForEntity(url, entity, ChatResponseDto.class);
@@ -64,7 +62,7 @@ public class OpenAIService {
                 throw new RuntimeException(e);
             }
 
-            //till here
+
 //            for(int i=0; i< output.size(); i++) {
 //            ChatRequestDto request = new ChatRequestDto(model, "Please label the following text with two words. The text is that " + (output.get(i)));
 //            HttpEntity<ChatRequestDto> entity = new HttpEntity<>(request, headers);
@@ -73,6 +71,8 @@ public class OpenAIService {
 //            result.add(response.getBody().getChoices().get(0).getMessage());
 //
 //        }
+
+            //should I use else ??
             doc.printFile(result);
 
         }
