@@ -7,23 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OutputFile {
-
-    private File filename;
-
-    public OutputFile(File filename) {
-        this.filename = filename;
+    public OutputFile() {
     }
 
-    public File getFilename() {
-        return filename;
-    }
-
-    public void setFilename(File filename) {
-        this.filename = filename;
-    }
-
-    public static void printFile(List<Message> responses) {
-        responses =new ArrayList<>();
+    public void printFile(List<Message> responses) {
         try {
             // Create a new PrintWriter instance, specifying the file name
             PrintWriter writer = new PrintWriter("output.csv");
@@ -34,11 +21,11 @@ public class OutputFile {
                 }
             }
 
-                writer.close();
+            writer.close();
 
-                System.out.println("Data written to the file successfully!");
-            } catch (IOException e) {
-                System.out.println("An error occurred: " + e.getMessage());
-            }
+            System.out.println("Data written to the file successfully!");
+        } catch (IOException e) {
+            System.out.println("An error occurred: " + e.getMessage());
+        }
         }
     }

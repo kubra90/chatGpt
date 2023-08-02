@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.example.model.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,21 +32,11 @@ public class OpenAIService {
 
    private RestTemplate template = new RestTemplate();
    FileReader file= new FileReader("prompt.csv");
-   OutputFile outputFile = new OutputFile(new File("output.csv"));
-
-//   public Message chat(String prompt){
-//       HttpHeaders headers = new HttpHeaders();
-//       headers.setContentType(MediaType.APPLICATION_JSON);
-//       headers.setBearerAuth(apiKey);
-//
-//       ChatRequestDto request = new ChatRequestDto(model, prompt);
-//       HttpEntity<ChatRequestDto> entity = new HttpEntity<>(request, headers);
-//
-//       ResponseEntity<ChatResponseDto> response = template.postForEntity(url, entity, ChatResponseDto.class);
-//       return response.getBody().getChoices().get(0).getMessage();
-//   }
-
     List<Message> output = file.readingFile();
+
+    OutputFile doc=new OutputFile();
+
+
 
     public List<Message> chat(){
         HttpHeaders headers = new HttpHeaders();
@@ -58,13 +51,7 @@ public class OpenAIService {
             result.add(response.getBody().getChoices().get(0).getMessage());
 
         }
-//        for(int i=0; i< result.size(); i++){
-//           result.get(i).getContent();
-//        }
-
-        outputFile.printFile(result);
+        doc.printFile(result);
         return result;
-
     }
-
 }
