@@ -14,7 +14,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:8080")
 public class FileDownloadController {
     private static final String FILES_DIRECTORY = "/Users/kubra/Desktop/API_Project/files/";
 

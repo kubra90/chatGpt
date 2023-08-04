@@ -9,9 +9,9 @@
     <div>
     <input type="file" @change="onFileChange" />
     <button @click="uploadFile">Upload</button>
-    <button @click="download" :disabled="!fileName">Download</button>
+    <button @click="download" :disabled="!OutputFile">Download</button>
     <br />
-    <a v-if="downloadLink" :href="downloadLink" :download=fileName>Download Converted File</a>
+    <a v-if="downloadLink" :href="downloadLink" :download=OutputFile>Download Converted File</a>
     </div>
     
     
@@ -28,7 +28,6 @@ export default {
   },
   data() {
     return {
-      fileName: null,
       downloadLink: null,
       OutputFile: null
     };
@@ -42,9 +41,11 @@ export default {
     //print the success message
       ChatService.chatRequest(this.file).then((response) => {
         // this.downloadLink = response.data.downloadLink;
-        this.OutputFile = response.data;
+        this.OutputFile = response.data
         console.log(this.OutputFile);
-        this.fileName = this.OutputFile.fileName;
+        // console.log(this.OutputFile.fileName);
+        // this.fileName = this.OutputFile.fileName;
+        // console.log(this.fileName)
         alert(`${this.file.name} has been successfully summarized`)
       })
       .catch((error) => {
@@ -53,12 +54,13 @@ export default {
 
     },
     download(){
-      DownloadService.downloadFiles(this.fileName).then((response) => {
-       
+      DownloadService.downloadFiles(this.OutputFile).then((response) => {
+       // download method accept file before calling this method, you should convert data type to file 
         const blob = new Blob([response.data], { type: "application/octet-stream" });
         const link = document.createElement('a');
         link.href =URL.createObjectURL(blob);
-        link.download = this.fileName;
+        link.download = this.OutputFile;
+        // console.log(this.OutputFile);
         link.click();
       })
       .catch((error) => {
