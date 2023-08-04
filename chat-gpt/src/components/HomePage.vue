@@ -1,11 +1,18 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <p>
+    <!-- <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the
       <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
+    </p> -->
+    <div>
+    <input type="file" @change="onFileChange" />
+    <button @click="uploadFile">Upload</button>
+    <button @click="downloadFile" :disabled="!downloadLink">Download</button>
+    <br />
+    <a v-if="downloadLink" :href="downloadLink" download="output.csv">Download Converted File</a>
+  </div>
     <h3>Installed CLI Plugins</h3>
     <ul>
       <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
@@ -31,12 +38,41 @@
 </template>
 
 <script>
+import ChatService from "../services/ChatService.js";
 export default {
-  name: 'HelloWorld',
+  name: 'HomePage',
   props: {
     msg: String
-  }
-}
+  },
+  data() {
+    return {
+      OutputFile: null,
+      downloadLink: null
+    };
+  },
+  methods: {
+    onFileChange(event) {
+      // Get the selected file from the input event
+      this.file = event.target.files[0];
+    },
+    uploadFile() {
+    //print the success message
+      ChatService.chatRequest(this.file).then((response) => {
+        this.downloadLink = response.data.downloadLink;
+        console.log(this.downloadLink);
+        alert(`${this.file.name} has been successfully summarized`)
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+
+    },
+    downloadFile(){
+
+    }
+  },
+  
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
