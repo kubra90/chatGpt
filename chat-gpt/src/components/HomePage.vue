@@ -8,10 +8,10 @@
     </p> -->
     <div>
     <input type="file" @change="onFileChange" />
-    <button @click="downloadFile">Upload</button>
+    <button @click="uploadFile">Upload</button>
     <button @click="download" :disabled="!OutputFile">Download</button>
     <br />
-    <a v-if="downloadLink" :href="downloadLink" :download=OutputFile>Download Converted File</a>
+    <a v-if="downloadLink" :href="downloadLink" :download="OutputFile">Download Converted File</a>
     </div>
     
     
@@ -68,24 +68,47 @@ export default {
     //   });
     // }
 
-downloadFile() {
+uploadFile() {
   ChatService.chatRequest(this.file)
     .then((response) => {
       this.OutputFile = response.data;
       console.log(this.OutputFile);
       alert(`${this.file.name} has been successfully summarized`)
       // Convert the response data to a Blob
-      const blob = new Blob([JSON.stringify(this.OutputFile)], { type: "application/json" });
+      // const blob = new Blob([JSON.stringify(this.OutputFile)], { type: "application/json" });
+
+      // // Create a temporary link element to initiate the download
+      // const link = document.createElement("a");
+      // link.href = URL.createObjectURL(blob);
+      // link.download = "output.csv"; // You can provide a default file name here
+      // link.click();
+    })
+    // .catch((error) => {
+    //   console.error(error);
+    // });
+},
+download() {
+  //convert array of objects to csv string
+  const csvData = this.convertToCSV(this.OutputFile);
+
+  //create a blob from a csv file.
+const blob = new Blob([csvData], { type: "text/csv" });
 
       // Create a temporary link element to initiate the download
       const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
-      link.download = "output.json"; // You can provide a default file name here
+      link.download = "output.csv"; // You can provide a default file name here
       link.click();
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+},
+convertToCSV(data){
+  const csvRows = [];
+  for(const row of data){
+    const cellValue = row["content"] ? row["content"].toString() : '';
+    //Escape double quotes in the cell value by doubling them
+    const escapedValue = `"${cellValue.replace(/"/g, '""')}"`;
+    csvRows.push(escapedValue);
+  }
+  return csvRows.join('\n'); //combine all rows with newline character
 }
 }
 }

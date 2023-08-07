@@ -16,10 +16,6 @@ public class ChatController {
     @Autowired
     OpenAIService service;
 
-//    @GetMapping("/chat")
-//    public Message getChat(@RequestParam String prompt){
-//        return service.chat(prompt);
-//    }
 
     @PostMapping("/chat")
     public List<Message> getChat(@RequestParam("file") MultipartFile file){
