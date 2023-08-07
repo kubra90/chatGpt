@@ -31,8 +31,6 @@ public class OpenAIService {
     private String model;
 
     private RestTemplate template = new RestTemplate();
-//    FileReader file = new FileReader("prompt.csv");
-//    List<Message> output = file.readingFile();
 
     OutputFile doc = new OutputFile();
 
@@ -50,7 +48,7 @@ public class OpenAIService {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()));
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    ChatRequestDto request = new ChatRequestDto(model, "Summarize the following text with one word only.  "+ line);
+                    ChatRequestDto request = new ChatRequestDto(model, "Label the following text with one word only.  "+ line);
                     HttpEntity<ChatRequestDto> entity = new HttpEntity<>(request, headers);
 
                     ResponseEntity<ChatResponseDto> response = template.postForEntity(url, entity, ChatResponseDto.class);
@@ -62,17 +60,6 @@ public class OpenAIService {
                 throw new RuntimeException(e);
             }
 
-
-//            for(int i=0; i< output.size(); i++) {
-//            ChatRequestDto request = new ChatRequestDto(model, "Please label the following text with two words. The text is that " + (output.get(i)));
-//            HttpEntity<ChatRequestDto> entity = new HttpEntity<>(request, headers);
-//
-//            ResponseEntity<ChatResponseDto> response = template.postForEntity(url, entity, ChatResponseDto.class);
-//            result.add(response.getBody().getChoices().get(0).getMessage());
-//
-//        }
-
-            //should I use else ??
             doc.printFile(result);
 
         }
