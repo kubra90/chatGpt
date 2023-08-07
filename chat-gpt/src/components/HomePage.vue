@@ -20,7 +20,6 @@
 
 <script>
 import ChatService from "../services/ChatService.js";
-// import DownloadService from "../services/DownloadService.js";
 export default {
   name: 'HomePage',
   props: {
@@ -69,7 +68,9 @@ convertToCSV(data){
   for(const row of data){
     const cellValue = row["content"] ? row["content"].toString() : '';
     //Escape double quotes in the cell value by doubling them
-    const escapedValue = `"${cellValue.replace(/"/g, '""')}"`;
+    //this will return the text without double quotes!(if you get result with double quotes, you should add '""'(double quotes) after the backtick
+    //and before backtick)
+    const escapedValue = `${cellValue.replace(/"/g, '""')}`;
     csvRows.push(escapedValue);
   }
   return csvRows.join('\n'); //combine all rows with newline character
