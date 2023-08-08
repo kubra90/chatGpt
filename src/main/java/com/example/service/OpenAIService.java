@@ -48,7 +48,7 @@ public class OpenAIService {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()));
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    ChatRequestDto request = new ChatRequestDto(model, "Label the following text with one word only.  "+ line);
+                    ChatRequestDto request = new ChatRequestDto(model, "Generate a one-word label that summarizes the following content.  "+ line);
                     HttpEntity<ChatRequestDto> entity = new HttpEntity<>(request, headers);
 
                     ResponseEntity<ChatResponseDto> response = template.postForEntity(url, entity, ChatResponseDto.class);
