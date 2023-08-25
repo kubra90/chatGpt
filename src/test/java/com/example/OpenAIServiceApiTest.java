@@ -37,6 +37,7 @@ public class OpenAIServiceApiTest {
     private OpenAIService openAiService;
 
     private MockMultipartFile mockFile;
+    private MockMultipartFile mockFile2;
 
    @BeforeEach
    public void setup() throws IOException {
@@ -53,7 +54,7 @@ public class OpenAIServiceApiTest {
 
        File file2 = new File("test2.csv");
        FileInputStream inputStream2 = new FileInputStream(file2);
-       mockFile = new MockMultipartFile(
+       mockFile2 = new MockMultipartFile(
                "file",
                file2.getName(),
                MediaType.TEXT_PLAIN_VALUE,
@@ -64,9 +65,12 @@ public class OpenAIServiceApiTest {
     @Test
     public void testChatApi() {
        List<Message> result = openAiService.chat(mockFile);
+       List<Message> result2 = openAiService.chat(mockFile2);
 
        //you can add more assertions based on your expected result
-        assertEquals(4, result.size());
+        assertEquals(5, result.size());
+        assertEquals(4, result2.size());
+
 
 
     }
