@@ -50,6 +50,15 @@ public class OpenAIServiceApiTest {
                MediaType.TEXT_PLAIN_VALUE,
                inputStream
        );
+
+       File file2 = new File("test2.csv");
+       FileInputStream inputStream2 = new FileInputStream(file2);
+       mockFile = new MockMultipartFile(
+               "file",
+               file2.getName(),
+               MediaType.TEXT_PLAIN_VALUE,
+               inputStream2
+       );
     }
 
     @Test
@@ -58,6 +67,19 @@ public class OpenAIServiceApiTest {
 
        //you can add more assertions based on your expected result
         assertEquals(4, result.size());
+
+
+    }
+
+    @Test
+    public void containsOneWord(){
+       List<Message> result = openAiService.chat(mockFile);
+
+       for( Message msg : result){
+           String exp = msg.getContent();
+           int strLength = exp.split("//s+").length;
+           assertEquals(1, strLength);
+       }
 
     }
 }

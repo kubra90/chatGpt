@@ -48,11 +48,17 @@ public class OpenAIService {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()));
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    ChatRequestDto request = new ChatRequestDto(model, "Generate a one-word label that summarizes the following content.  "+ line);
-                    HttpEntity<ChatRequestDto> entity = new HttpEntity<>(request, headers);
+                    //if the line is empty! It should save the empty line to the output file as it is.
+                    if(line.isEmpty()){
+                        Message msg = new Message("assistant", "   ");
+                        result.add(msg);
+                    }else {
+                        ChatRequestDto request = new ChatRequestDto(model, "Generate a one-word label that summarizes the following content.  " + line);
+                        HttpEntity<ChatRequestDto> entity = new HttpEntity<>(request, headers);
 
-                    ResponseEntity<ChatResponseDto> response = template.postForEntity(url, entity, ChatResponseDto.class);
-                    result.add(response.getBody().getChoices().get(0).getMessage());
+                        ResponseEntity<ChatResponseDto> response = template.postForEntity(url, entity, ChatResponseDto.class);
+                        result.add(response.getBody().getChoices().get(0).getMessage());
+                    }
                 }
 
                 reader.close();
