@@ -124,4 +124,8 @@ font-family: Avenir, Helvetica, Arial, sans-serif;
 }
 
 
+.custom-button:hover {
+  background-color: #2980b9;
+}
+
 </style>
