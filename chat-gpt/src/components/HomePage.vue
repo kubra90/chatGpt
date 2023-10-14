@@ -12,8 +12,8 @@
 
     <!-- add text input here-->
     <input type='text' v-model="promptText" placeholder= "Enter your prompt!">
-    <button @click="uploadFile">Upload</button>
-    <button @click="download" :disabled="!OutputFile">Download</button>
+    <button class="custom-button" @click="uploadFile">Upload</button>
+    <button class="custom-button" @click="download" :disabled="!OutputFile">Download</button>
     <br />
     <a v-if="downloadLink" :href="downloadLink" :download="OutputFile">Download Converted File</a>
     </div>
@@ -111,4 +111,17 @@ font-family: Avenir, Helvetica, Arial, sans-serif;
   text-align: center;
   color: black;
 }
+
+.custom-button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+
 </style>
