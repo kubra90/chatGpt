@@ -34,8 +34,10 @@ public class OpenAIService {
 
     OutputFile doc = new OutputFile();
 
+    //prompt can be changed!
 
-    public List<Message> chat(MultipartFile file) {
+
+    public List<Message> chat(MultipartFile file, String promptText) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(apiKey);
@@ -53,7 +55,7 @@ public class OpenAIService {
                         Message msg = new Message("assistant", "   ");
                         result.add(msg);
                     }else {
-                        ChatRequestDto request = new ChatRequestDto(model, "Generate a one-word label that summarizes the following content.  " + line);
+                        ChatRequestDto request = new ChatRequestDto(model,promptText + line);
                         HttpEntity<ChatRequestDto> entity = new HttpEntity<>(request, headers);
 
                         ResponseEntity<ChatResponseDto> response = template.postForEntity(url, entity, ChatResponseDto.class);

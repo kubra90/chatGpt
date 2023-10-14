@@ -1,6 +1,8 @@
 <template>
-  <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-  <HomePage msg="Upload your file and get summarized version of the text with one word"/>
+  <div>
+   <img alt="Vue logo" src="./assets/logo1.jpeg"> 
+  <HomePage msg="Upload your research file and enter your prompt"/>
+ </div>
 </template>
 
 <script>
@@ -20,7 +22,8 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: black;
+  background-color: #e4e5e9;
   margin-top: 60px;
 }
 </style>

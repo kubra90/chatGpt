@@ -5,10 +5,11 @@ const http = axios.create( {
 })
 
 export default {
-    chatRequest(file) {
+    chatRequest(file, promptText) {
       // Create a FormData object and append the selected file to it
       const formData = new FormData();
       formData.append('file', file);
+      formData.append('promptText', promptText);
   
       // Send the file using Axios with the correct headers
       return http.post('/chat', formData, {

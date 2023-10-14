@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <h1>you'll get the result</h1>
     <!-- <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the
@@ -8,6 +9,9 @@
     </p> -->
     <div>
     <input type="file" @change="onFileChange" />
+
+    <!-- add text input here-->
+    <input type='text' v-model="promptText" placeholder= "Enter your prompt!">
     <button @click="uploadFile">Upload</button>
     <button @click="download" :disabled="!OutputFile">Download</button>
     <br />
@@ -28,7 +32,10 @@ export default {
   data() {
     return {
       downloadLink: null,
-      OutputFile: null
+      OutputFile: null,
+      // file: null,
+    
+      promptText: '',
     };
   },
   methods: {
@@ -41,7 +48,7 @@ export default {
  
 
 uploadFile() {
-  ChatService.chatRequest(this.file)
+  ChatService.chatRequest(this.file, this.promptText)
     .then((response) => {
       this.OutputFile = response.data;
       console.log(this.OutputFile);
@@ -94,6 +101,14 @@ li {
   margin: 0 10px;
 }
 a {
-  color: #42b983;
+  color: #e4e5e9;
+}
+
+h1 {
+font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: black;
 }
 </style>

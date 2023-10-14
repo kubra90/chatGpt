@@ -18,9 +18,9 @@ public class ChatController {
 
 
     @PostMapping("/chat")
-    public List<Message> getChat(@RequestParam("file") MultipartFile file){
+    public List<Message> getChat(@RequestParam("file") MultipartFile file, @RequestParam("promptText") String promptMsg){
         //pass in file
-        return service.chat(file);
+        return service.chat(file, promptMsg);
     }
 
 }
