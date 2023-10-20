@@ -1,5 +1,3 @@
 # Automated Text Labeling
 
-I have developed a product using the ChatGPT API. The purpose of this product is to generate a one word label that summarizes the content. 
-This tool enables the uploading of a csv file containing an array of textual data. Once uploaded, it seamlessly generates one-word labels for 
-all the text entries within the csv file, presenting the results in a convenient csv format. Built using Java, Spring, Javascript, HTML, CSS, RESTful API.
+I have developed a product using the ChatGPT API. The purpose of this product is to generate a response file based on the researcher's question for any research purpose. This tool allows users to upload a CSV file containing a collection of textual data. Once uploaded, it seamlessly generates labels for all the text entries within the CSV file and presents the results in a convenient CSV format. The product is built using Java, Spring, JavaScript, HTML, CSS, and a RESTful API. With this product, my aim is to simplify the text labeling process for researchers.
